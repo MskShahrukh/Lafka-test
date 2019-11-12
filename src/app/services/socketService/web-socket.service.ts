@@ -4,20 +4,22 @@ import * as socketType from "socket.io";
 import { Observable } from "rxjs";
 
 import { environment } from "../../../environments/environment";
-
 import { AppTerminalService } from "../terminalService/app-terminal.service";
 
 @Injectable({
   providedIn: "root"
 })
 export class WebSocketService {
-  socket: socketType;
+  socket: any;
   readonly apiUrl: string = environment.apiUrl;
 
   constructor(private terminal: AppTerminalService) {}
 
   emit(eventName: string, data: any) {
     this.socket.emit(eventName, data);
+    return new Observable(subscriber => {
+      subscriber.next({ eventName, emitted: true });
+    });
   }
 
   listen(eventName: string) {
@@ -28,7 +30,7 @@ export class WebSocketService {
     });
   }
 
-  connectToServer(xToken: string) {
+  connectToServer(xToken: string, testUrl?: any) {
     let transportOptions = {
       polling: {
         extraHeaders: {
@@ -37,7 +39,7 @@ export class WebSocketService {
       }
     };
 
-    this.socket = io(this.apiUrl, {
+    this.socket = io(testUrl || this.apiUrl, {
       transportOptions
     });
 
@@ -50,9 +52,21 @@ export class WebSocketService {
       console.log("Socket disconnected.");
       this.terminal.pushToTerminal("Socket disconnected.");
     });
+
+    return new Observable(subscriber => {
+      this.socket.on("connect", (...data: any) => {
+        subscriber.next({ connected: true });
+      });
+    });
   }
 
   closeConnection() {
-    this.socket.close();
+    return new Observable(subscriber => {
+      this.socket.on("disconnect", (...data: any) => {
+        subscriber.next({ connected: false });
+      });
+
+      this.socket.close();
+    });
   }
 }

@@ -13,13 +13,4 @@ export class TerminalComponent implements OnInit {
   terminalResponses: String[] = this.terminal.terminalResponses;
 
   ngOnInit() {}
-  ngAfterViewChecked() {
-    this.scrollToBottom();
-  }
-
-  scrollToBottom(): void {
-    try {
-      // this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
-    } catch (err) {}
-  }
 }

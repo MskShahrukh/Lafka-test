@@ -1,8 +1,14 @@
+.centered {
+  display: flex;
+  justify-content: center;
+}
+
 .terminal {
   border-radius: 10px;
   border: 2px solid silver;
   background: rgba(0, 0, 0, 0.5);
-  /* font-weight: bold; */
+  width: 800px;
+  max-width: 800px;
 }
 
 .terminal-commands {
@@ -11,6 +17,10 @@
   color: #fff;
   background: rgba(0, 0, 0, 0.2);
   border-radius: 10px;
+}
+
+.text-white {
+  color: #fff;
 }
 
 /* Scroll bar */
