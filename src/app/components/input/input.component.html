@@ -1,0 +1,59 @@
+<div class="margin padded">
+  <button
+    mat-raised-button
+    class="margin"
+    color="primary"
+    (click)="authenticate()"
+    [disabled]="currentStep !== 1"
+  >
+    Auth & Connect
+  </button>
+  <button
+    mat-raised-button
+    class="margin"
+    color="primary"
+    (click)="connectToChanel()"
+    [disabled]="currentStep !== 2"
+  >
+    Join Channel
+  </button>
+  <button
+    mat-raised-button
+    class="margin"
+    color="primary"
+    (click)="connectToRoom()"
+    [disabled]="currentStep !== 3"
+  >
+    Join Room
+  </button>
+  <button
+    mat-raised-button
+    class="margin"
+    color="primary"
+    (click)="getMessages()"
+    [disabled]="currentStep !== 4"
+  >
+    Get Messages
+  </button>
+  <button
+    mat-raised-button
+    class="margin"
+    color="primary"
+    (click)="validateMsg()"
+    [disabled]="currentStep !== 5"
+  >
+    Validate
+  </button>
+
+  <!-- <button
+    mat-raised-button
+    class="margin"
+    color="warn"
+    (click)="pushtoTerminal('hi')"
+  >
+    push to terminal
+  </button> -->
+  <!-- <button mat-raised-button class="margin" color="warn">Warm</button>
+  <button mat-raised-button class="margin" disabled>Disabled</button>
+  <a mat-raised-button routerLink="." class="margin">Link</a> -->
+</div>

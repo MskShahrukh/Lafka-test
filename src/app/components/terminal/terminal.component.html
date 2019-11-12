@@ -1,0 +1,17 @@
+<div class="margin padded ">
+  <div class=" margin padded terminal">
+    <h3 class="text-center">Terminal</h3>
+    <div
+      class="terminal-commands"
+      #scrollMe
+      [scrollTop]="scrollMe.scrollHeight"
+    >
+      <div
+        *ngFor="let response of terminalResponses; let i = index"
+        class="margin"
+      >
+        <code> > {{ response }} </code>
+      </div>
+    </div>
+  </div>
+</div>
