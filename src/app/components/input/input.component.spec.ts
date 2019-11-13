@@ -1,4 +1,3 @@
-import { DebugElement } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 
@@ -10,13 +9,8 @@ import { AppTerminalService } from "../../services/terminalService/app-terminal.
 describe("InputComponent", () => {
   let component: InputComponent;
   let fixture: ComponentFixture<InputComponent>;
-  let de: DebugElement;
-
-  let serviceStub: any;
 
   beforeEach(async(() => {
-    serviceStub = {};
-
     TestBed.configureTestingModule({
       declarations: [InputComponent],
       imports: [HttpClientTestingModule],

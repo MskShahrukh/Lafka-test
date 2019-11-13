@@ -8,9 +8,9 @@ import { environment } from "../../../environments/environment";
   providedIn: "root"
 })
 export class WebHttpService {
-  constructor(private http: HttpClient) {}
-
   readonly apiUrl: string = environment.apiUrl;
+
+  constructor(private http: HttpClient) {}
 
   post(route: string, data: any) {
     return new Observable(subscriber => {

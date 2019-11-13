@@ -1,9 +1,9 @@
-import { Component, OnInit, Injectable } from "@angular/core";
-import { Token } from "../../interfaces/i-token";
+import { Component, OnInit } from "@angular/core";
 
 import { WebHttpService } from "../../services/httpService/web-http.service";
 import { WebSocketService } from "../../services/socketService/web-socket.service";
 import { AppTerminalService } from "../../services/terminalService/app-terminal.service";
+import { Auth, Connection, Room } from "../../interfaces/interfaces";
 
 @Component({
   selector: "app-input",
@@ -17,7 +17,7 @@ export class InputComponent implements OnInit {
     private terminal: AppTerminalService
   ) {}
 
-  token: Token = { token: "" };
+  token: Auth = { token: "" };
   currentStep: number = 1;
 
   channelId: string = "";
@@ -32,17 +32,17 @@ export class InputComponent implements OnInit {
 
   authenticate() {
     this.currentStep = 0;
-    this.terminal.pushToTerminal("authentication fired...");
-    this.http.post("/token", {}).subscribe((auth: Token) => {
+    this.pushToTerminal("authentication fired...");
+    this.http.post("/token", {}).subscribe((auth: Auth) => {
       this.token = auth;
-      this.terminal.pushToTerminal("authenticated. " + JSON.stringify(auth));
+      this.pushToTerminal("authenticated. ", auth);
       this.connectToSocket(this.token);
     });
   }
 
-  connectToSocket(xToken: Token) {
-    this.terminal.pushToTerminal("connectToSocket fired...");
-    this.socket.connectToServer(xToken.token).subscribe((x: any) => {
+  connectToSocket(authObj: Auth) {
+    this.pushToTerminal("connectToSocket fired...");
+    this.socket.connectToServer(authObj.token).subscribe((x: Connection) => {
       if (x.connected) {
         this.currentStep = 2;
       }
@@ -52,15 +52,11 @@ export class InputComponent implements OnInit {
   connectToChanel() {
     this.currentStep = 0;
 
-    this.terminal.pushToTerminal("connectToChanel fired...");
-    this.socket.emit("channel", {}).subscribe((x: any) => {
-      console.log("x >>> ", x);
-    });
-    this.socket.listen("channel").subscribe((channelId: any) => {
+    this.pushToTerminal("connectToChanel fired...");
+    this.socket.emit("channel", {});
+    this.socket.listen("channel").subscribe((channelId: string) => {
       this.channelId = channelId;
-      this.terminal.pushToTerminal(
-        "Channel Joined. " + JSON.stringify(channelId)
-      );
+      this.pushToTerminal("Channel Joined. ", channelId);
 
       this.currentStep = 3;
     });
@@ -69,11 +65,11 @@ export class InputComponent implements OnInit {
   connectToRoom() {
     this.currentStep = 0;
 
-    this.terminal.pushToTerminal("connectToRoom fired...");
+    this.pushToTerminal("connectToRoom fired...");
     this.socket.emit("join-room", this.channelId);
-    this.socket.listen("join-room").subscribe((room: any) => {
+    this.socket.listen("join-room").subscribe((room: Room) => {
       this.roomConnected = true;
-      this.terminal.pushToTerminal("Room Joined. " + JSON.stringify(room));
+      this.pushToTerminal("Room Joined. ", room);
 
       this.currentStep = 4;
     });
@@ -82,16 +78,16 @@ export class InputComponent implements OnInit {
   getMessages() {
     this.currentStep = 0;
 
-    this.terminal.pushToTerminal("getMessages fired...");
+    this.pushToTerminal("getMessages fired...");
     this.socket.emit("counter", {});
-    this.socket.listen("item").subscribe((item: any) => {
-      this.terminal.pushToTerminal("msg >>> " + JSON.stringify(item));
+    this.socket.listen("item").subscribe((item: string[]) => {
+      this.pushToTerminal("msg >>> ", item);
 
       let counter = JSON.parse(item[0]);
       let msg = item[1];
 
       if (counter % 10 === 0) {
-        this.terminal.pushToTerminal("Tenth message Reached.");
+        this.pushToTerminal("Tenth message Reached.");
         this.tenthMsg = msg;
 
         this.currentStep = 5;
@@ -102,25 +98,17 @@ export class InputComponent implements OnInit {
   validateMsg() {
     this.currentStep = 0;
 
-    this.terminal.pushToTerminal(
-      "validateMsg fired... " + JSON.stringify(this.tenthMsg)
-    );
+    this.pushToTerminal("validateMsg fired... ", this.tenthMsg);
     this.http
       .get("/validate", "token", this.tenthMsg)
-      .subscribe((validatedObj: any) => {
-        this.validation = validatedObj;
+      .subscribe((validated: boolean) => {
+        this.validation = validated;
 
-        this.terminal.pushToTerminal(
-          "********************************************"
-        );
-        this.terminal.pushToTerminal(
-          "Validation response : " + JSON.stringify(validatedObj)
-        );
-        this.terminal.pushToTerminal(
-          "********************************************"
-        );
+        this.pushToTerminal("**************************");
+        this.pushToTerminal("Validation response : ", validated);
+        this.pushToTerminal("**************************");
 
-        this.socket.closeConnection().subscribe((x: any) => {
+        this.socket.closeConnection().subscribe((x: Connection) => {
           if (x.connected === false) {
             this.currentStep = 1;
           }
@@ -128,7 +116,11 @@ export class InputComponent implements OnInit {
       });
   }
 
-  pushtoTerminal(data: string) {
-    this.terminal.pushToTerminal(data);
+  pushToTerminal(text: string, obj?: any) {
+    if (obj) {
+      this.terminal.pushToTerminal(text + JSON.stringify(obj));
+    } else {
+      this.terminal.pushToTerminal(text);
+    }
   }
 }

@@ -4,8 +4,9 @@ import {
   HttpTestingController
 } from "@angular/common/http/testing";
 
-import { WebHttpService } from "./web-http.service";
 import { environment } from "../../../environments/environment";
+import { WebHttpService } from "./web-http.service";
+import { Auth } from "../../interfaces/interfaces";
 
 describe("WebHttpService", () => {
   let injector: TestBed;
@@ -30,7 +31,7 @@ describe("WebHttpService", () => {
   const dummyTokenResponse = { token: "1234-5678-9101" };
 
   it("POST(/token) should return token", () => {
-    service.post("/token", {}).subscribe((res: any) => {
+    service.post("/token", {}).subscribe((res: Auth) => {
       expect(res.token).toBeTruthy();
     });
 
@@ -39,7 +40,7 @@ describe("WebHttpService", () => {
     req.flush(dummyTokenResponse);
   });
 
-  it("should be created", () => {
+  it("should create", () => {
     const service: WebHttpService = TestBed.get(WebHttpService);
     expect(service).toBeTruthy();
   });

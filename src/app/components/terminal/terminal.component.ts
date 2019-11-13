@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 
 import { AppTerminalService } from "../../services/terminalService/app-terminal.service";
 

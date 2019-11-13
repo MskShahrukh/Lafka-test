@@ -1,7 +1,9 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 import { MainComponent } from "./main.component";
-import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { TerminalComponent } from "../terminal/terminal.component";
+import { InputComponent } from "../input/input.component";
 
 describe("MainComponent", () => {
   let component: MainComponent;
@@ -9,9 +11,8 @@ describe("MainComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MainComponent],
-
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      declarations: [MainComponent, TerminalComponent, InputComponent],
+      imports: [HttpClientTestingModule]
     }).compileComponents();
   }));
 

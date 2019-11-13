@@ -1,7 +1,7 @@
 <div class="margin padded centered">
   <button
     mat-raised-button
-    class="margin"
+    class="margin btn"
     color="primary"
     (click)="authenticate()"
     [disabled]="currentStep !== 1"
@@ -10,7 +10,7 @@
   </button>
   <button
     mat-raised-button
-    class="margin"
+    class="margin btn"
     color="primary"
     (click)="connectToChanel()"
     [disabled]="currentStep !== 2"
@@ -19,7 +19,7 @@
   </button>
   <button
     mat-raised-button
-    class="margin"
+    class="margin btn"
     color="primary"
     (click)="connectToRoom()"
     [disabled]="currentStep !== 3"
@@ -28,7 +28,7 @@
   </button>
   <button
     mat-raised-button
-    class="margin"
+    class="margin btn"
     color="primary"
     (click)="getMessages()"
     [disabled]="currentStep !== 4"
@@ -37,7 +37,7 @@
   </button>
   <button
     mat-raised-button
-    class="margin"
+    class="margin btn"
     color="primary"
     (click)="validateMsg()"
     [disabled]="currentStep !== 5"

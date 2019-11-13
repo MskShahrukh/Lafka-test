@@ -2,3 +2,15 @@
   display: flex;
   justify-content: center;
 }
+
+.btn {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+@media only screen and (max-width: 600px) {
+  .centered {
+    display: inline-block;
+    margin: auto;
+  }
+}

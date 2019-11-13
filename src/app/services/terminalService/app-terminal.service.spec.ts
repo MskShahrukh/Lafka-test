@@ -1,11 +1,11 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { AppTerminalService } from './app-terminal.service';
+import { AppTerminalService } from "./app-terminal.service";
 
-describe('AppTerminalService', () => {
+describe("AppTerminalService", () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
-  it('should be created', () => {
+  it("should create", () => {
     const service: AppTerminalService = TestBed.get(AppTerminalService);
     expect(service).toBeTruthy();
   });
