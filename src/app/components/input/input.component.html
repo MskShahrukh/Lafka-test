@@ -1,47 +1,13 @@
 <div class="margin padded centered">
-  <button
-    mat-raised-button
-    class="margin btn"
-    color="primary"
-    (click)="authenticate()"
-    [disabled]="currentStep !== 1"
-  >
-    Auth & Connect
-  </button>
-  <button
-    mat-raised-button
-    class="margin btn"
-    color="primary"
-    (click)="connectToChanel()"
-    [disabled]="currentStep !== 2"
-  >
-    Join Channel
-  </button>
-  <button
-    mat-raised-button
-    class="margin btn"
-    color="primary"
-    (click)="connectToRoom()"
-    [disabled]="currentStep !== 3"
-  >
-    Join Room
-  </button>
-  <button
-    mat-raised-button
-    class="margin btn"
-    color="primary"
-    (click)="getMessages()"
-    [disabled]="currentStep !== 4"
-  >
-    Get Messages
-  </button>
-  <button
-    mat-raised-button
-    class="margin btn"
-    color="primary"
-    (click)="validateMsg()"
-    [disabled]="currentStep !== 5"
-  >
-    Validate
-  </button>
+  <div *ngFor="let button of buttons; let i = index">
+    <button
+      mat-raised-button
+      class="margin btn"
+      color="primary"
+      (click)="button.action()"
+      [disabled]="currentStep !== i + 1"
+    >
+      {{ button.name }}
+    </button>
+  </div>
 </div>

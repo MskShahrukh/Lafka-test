@@ -6,7 +6,7 @@ import {
 
 import { environment } from "../../../environments/environment";
 import { WebHttpService } from "./web-http.service";
-import { Auth } from "../../interfaces/interfaces";
+import { Auth } from "../../interfaces";
 
 describe("WebHttpService", () => {
   let injector: TestBed;

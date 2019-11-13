@@ -2,9 +2,11 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 import { InputComponent } from "./input.component";
-import { WebHttpService } from "../../services/httpService/web-http.service";
-import { WebSocketService } from "../../services/socketService/web-socket.service";
-import { AppTerminalService } from "../../services/terminalService/app-terminal.service";
+import {
+  WebHttpService,
+  WebSocketService,
+  AppTerminalService
+} from "../../services/index";
 
 describe("InputComponent", () => {
   let component: InputComponent;

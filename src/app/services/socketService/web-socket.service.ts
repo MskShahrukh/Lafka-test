@@ -15,21 +15,6 @@ export class WebSocketService {
 
   constructor(private terminal: AppTerminalService) {}
 
-  emit(eventName: string, data: any) {
-    this.socket.emit(eventName, data);
-    return new Observable(subscriber => {
-      subscriber.next({ eventName, emitted: true });
-    });
-  }
-
-  listen(eventName: string) {
-    return new Observable(subscriber => {
-      this.socket.on(eventName, (...data: any) => {
-        subscriber.next(data);
-      });
-    });
-  }
-
   connectToServer(xToken: string, testUrl?: string) {
     let transportOptions = {
       polling: {
@@ -58,6 +43,21 @@ export class WebSocketService {
       });
       this.socket.on("error", err => {
         terminal.pushToTerminal("Socket ERROR : " + JSON.stringify(err));
+      });
+    });
+  }
+
+  emit(eventName: string, data: any) {
+    this.socket.emit(eventName, data);
+    return new Observable(subscriber => {
+      subscriber.next({ eventName, emitted: true });
+    });
+  }
+
+  listen(eventName: string) {
+    return new Observable(subscriber => {
+      this.socket.on(eventName, (...data: any) => {
+        subscriber.next(data);
       });
     });
   }

@@ -15,3 +15,8 @@ export interface Room {
   roomId: string;
   token: string;
 }
+
+export interface InputButton {
+  name: string;
+  action: () => any;
+}

@@ -4,18 +4,11 @@ import { HttpClientModule } from "@angular/common/http";
 import { MatButtonModule } from "@angular/material/button";
 
 import { AppComponent } from "./app.component";
-import { MainComponent } from "./components/main/main.component";
-import { InputComponent } from "./components/input/input.component";
-import { TerminalComponent } from "./components/terminal/terminal.component";
+import { InputComponent, TerminalComponent } from "./components/index";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    MainComponent,
-    InputComponent,
-    TerminalComponent
-  ],
+  declarations: [AppComponent, InputComponent, TerminalComponent],
   imports: [
     BrowserModule,
     HttpClientModule,

@@ -3,7 +3,7 @@ import { TestBed } from "@angular/core/testing";
 // import * as io from "socket.io-client";
 
 import { WebSocketService } from "./web-socket.service";
-import { Connection, Event } from "../../interfaces/interfaces";
+import { Connection, Event } from "../../interfaces";
 
 describe("WebSocketService", () => {
   beforeEach(() => {
