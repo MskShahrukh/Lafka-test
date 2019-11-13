@@ -25,6 +25,7 @@ describe("WebSocketService", () => {
     service.connectToServer(dummyAuth.token).subscribe((x: Connection) => {
       if (x.connected) {
         expect(x.connected).toBe(true);
+        service.closeConnection();
         done();
       }
     });
@@ -48,6 +49,7 @@ describe("WebSocketService", () => {
           if (y.emitted) {
             expect(y.emitted).toBe(true);
             expect(y.eventName).toBe("Channel");
+            service.closeConnection();
             done();
           }
         });

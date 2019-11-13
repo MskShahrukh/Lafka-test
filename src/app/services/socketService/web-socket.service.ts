@@ -43,10 +43,21 @@ export class WebSocketService {
       transportOptions
     });
 
+    let terminal = this.terminal;
+
     return new Observable(subscriber => {
       this.socket.on("connect", () => {
-        this.terminal.pushToTerminal("Socket connected.");
+        terminal.pushToTerminal("Socket connected.");
         subscriber.next({ connected: true });
+      });
+      this.socket.on("reconnecting", () => {
+        terminal.pushToTerminal("connect_failed, reconnecting...");
+      });
+      this.socket.on("connect_failed", () => {
+        terminal.pushToTerminal("connect_failed");
+      });
+      this.socket.on("error", err => {
+        terminal.pushToTerminal("Socket ERROR : " + JSON.stringify(err));
       });
     });
   }
@@ -55,6 +66,7 @@ export class WebSocketService {
     return new Observable(subscriber => {
       this.socket.on("disconnect", () => {
         subscriber.next({ connected: false });
+        this.terminal.pushToTerminal("Socket disconnected.");
       });
 
       this.socket.close();
